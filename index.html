@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>札幌中学受験イベントガイド ～受験への道しるべ～</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #0c1445 0%, #1a237e 50%, #3949ab 100%);
+            color: #fff;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 星空背景 */
+        .stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        .star:nth-child(odd) {
+            animation-delay: 1s;
+        }
+
+        .star:nth-child(even) {
+            animation-delay: 2s;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .header {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .header h1::before,
+        .header h1::after {
+            content: '✦';
+            color: #ffd700;
+            font-size: 1.5em;
+            text-shadow: 
+                0 0 10px rgba(255, 215, 0, 0.8),
+                0 0 20px rgba(255, 215, 0, 0.6),
+                0 0 30px rgba(255, 215, 0, 0.4);
+            animation: starGlow 2s ease-in-out infinite alternate;
+        }
+
+        .header h1::before {
+            margin-right: 0.5rem;
+        }
+
+        .header h1::after {
+            margin-left: 0.5rem;
+        }
+
+        @keyframes starGlow {
+            0% { 
+                opacity: 0.7;
+                text-shadow: 
+                    0 0 10px rgba(255, 215, 0, 0.8),
+                    0 0 20px rgba(255, 215, 0, 0.6),
+                    0 0 30px rgba(255, 215, 0, 0.4);
+            }
+            100% { 
+                opacity: 1;
+                text-shadow: 
+                    0 0 15px rgba(255, 215, 0, 1),
+                    0 0 25px rgba(255, 215, 0, 0.8),
+                    0 0 35px rgba(255, 215, 0, 0.6),
+                    0 0 45px rgba(255, 215, 0, 0.4);
+            }
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .category-section {
+            margin-bottom: 4rem;
+        }
+
+        .category-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .category-title::before,
+        .category-title::after {
+            content: '✦';
+            margin: 0 1rem;
+            color: #ffd700;
+            animation: sparkle 2s infinite;
+            font-size: 1.2em;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .event-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            transition: all 0.3s ease;
+            overflow: visible;
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .event-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        .event-card:hover::before {
+            opacity: 1;
+        }
+
+        .school-name {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #ffd700;
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .event-name {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            color: #e3f2fd;
+        }
+
+        .event-details {
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .detail-icon {
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .target-grade {
+            display: inline-block;
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .apply-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            border-left: 4px solid #ffd700;
+        }
+
+        .apply-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #ffd700;
+        }
+
+        .apply-period {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.3rem;
+        }
+
+        .apply-method {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .special-note {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            padding: 0.8rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+        }
+
+        .category-tag {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .category-tag.test {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+        }
+
+        .category-tag.experience {
+            background: linear-gradient(135deg, #4ecdc4, #44b3a6);
+        }
+
+        .category-tag.club {
+            background: linear-gradient(135deg, #ffe66d, #ffd93d);
+            color: #333;
+        }
+
+        .price-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.5rem 0.8rem;
+            border-radius: 10px;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .event-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #333 !important;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none !important;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            cursor: pointer;
+            position: relative;
+            z-index: 10;
+        }
+
+        .event-link:hover {
+            background: linear-gradient(135deg, #ffed4e, #ffd700);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+            color: #333 !important;
+            text-decoration: none !important;
+            z-index: 10;
+        }
+
+        .event-link:visited {
+            color: #333 !important;
+        }
+
+        .event-link:active {
+            color: #333 !important;
+        }
+
+        .event-link.unavailable {
+            background: rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.7);
+            cursor: not-allowed;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .event-link.unavailable:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* レスポンシブデザイン */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .category-title {
+                font-size: 1.5rem;
+            }
+            
+            .event-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars" id="stars"></div>
+    
+    <header class="header">
+        <h1>✦ 札幌私立中学校受験イベントガイド ✦</h1>
+        <p style="margin-top: 1rem; font-size: 1rem; opacity: 0.8;">駿台小中学部 提供</p>
+    </header>
+
+    <div class="container">
+        <!-- 模試・テスト -->
+        <section class="category-section">
+            <h2 class="category-title">模試・テスト・体験授業</h2>
+            <div class="event-grid">
+                <!-- 藤女子中学校 小6学習会 -->
+                <div class="event-card">
+                    <div class="category-tag experience">体験授業</div>
+                    <h3 class="school-name">藤女子中学校</h3>
+                    <h4 class="event-name">小6学習会</h4>
+                    <div class="event-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">📅</span>
+                            <span>2025年9月13日（土）</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">⏰</span>
+                            <span>午前 8:40-12:00 / 午後 12:40-16:00</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">📚</span>
+                            <span>国語・算数（35分）、社会・理科（30分）</span>
+                        </div>
+                        <div class="price-info">💰 無料</div>
+                        <span class="target-grade">小学6年生対象</span>
+                    </div>
+                    <div class="apply-info">
+                        <div class="apply-title">申込方法</div>
+                        <div class="apply-method">事前申込制（QRコードまたはWeb申込）</div>
+                    </div>
+                    <div class="special-note">
+                        💡 入試対策授業と学習方法指導。保護者向け説明会同時開催
+                    </div>
+                    <a href="https://www.fujijoshi.ac.jp/" class="event-link">
+                        🌐 藤女子中学校 公式サイト
+                    </a>
+                </div>
+
+                <!-- 立命館慶祥中学校 立命模試 -->
+                <div class="event-card">
+                    <div class="category-tag test">模試・テスト</div>
+                    <h3 class="school-name">立命館慶祥中学校</h3>
+                    <h4 class="event-name">立命模試</h4>
+                    <div class="event-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">📅</span>
+                            <span>2025年9月28日（日）</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">⏰</span>
+                            <span>8:30-13:00</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">📚</span>
+                            <span>国語・算数（60分）、社会・理科（40分）</span>
+                        </div>
+                        <div class="price-info">💰 2,000円（+事務手数料）</div>
+                        <span class="target-grade">小学6年生対象</span>
+                    </div>
+                    <div class="apply-info">
+                        <div class="apply-title">申込方法</div>
+                        <div class="apply-period">9月1日（月）10:00～9月22日（月）9:00</div>
+                        <div class="apply-method">Web申込（クレジット・コンビニ・ペイジー決済）</div>
+                    </div>
+                    <div class="special-note">
+                        💡 保護者向け特別説明会同時開催。「入試問題傾向と解説」贈呈
+                    </div>
+                    <a href="https://www.spc.ritsumei.ac.jp/" class="event-link">
+                        🌐 立命館慶祥中学校 公式サイト
+                    </a>
+                </div>
+
+                <!-- 札幌日大中学校 入試プレテスト -->
+                <div class="event-card">
+                    <div class="category-tag test">模試・テスト</div>
+                    <h3 class="school-name">札幌日大中学校</h3>
+                    <h4 class="event-name">入試プレテスト・プレテストJunior</h4>
+                    <div class="event-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">📅</span>
+                            <span>10月18日（土）・19日（日）</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">📚</span>
+                            <span>4教科型・公立中高一貫適性検査型・個性重視型から選択</span>
+                        </div>
+                        <div class="price-info">
+                            💰 受験料：1つ 2,000円 / 2つ 2,500円 / 3つ 3,000円
+                        </div>
+                        <span class="target-grade">小学6年生・小学5年生対象</span>
+                    </div>
+                    <div class="apply-info">
+                        <div class="apply-title">申込方法</div>
+                        <div class="apply-period">9月1日～10月14日</div>
+                        <div class="apply-method">Web申込のみ</div>
+                    </div>
+                    <div class="special-note">
+                        💡 受験日選択制。2026年度・2027年度入学希望者対象。複数受験形式から選択可能
+                    </div>
+                    <a href="https://lsg.mescius.com/sapporonichidai_j/App/" class="event-link">
+                        📝 札幌日大中 申込サイト
+                    </a>
+                </div>
+
+                <!-- 札幌大谷中学校 医進・英数プレテスト -->
+                <div class="event-card">
+                    <div class="category-tag test">模試・テスト</div>
+                    <h3 class="school-name">札幌大谷中学校</h3>
+                    <h4 class="event-name">医進・英数プレテスト</h4>
+                    <div class="event-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">📅</span>
+                            <span>10月19日（日）</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">⏰</span>
+                            <span>9:00-12:00</span>
+                        </div>
+                        <span class="target-grade">小学6年生対象</span>
+                    </div>
+                    <div class="apply-info">
+                        <div class="apply-title">申込方法</div>
+                        <div class="apply-method">準備中</div>
+                    </div>
+                    <a href="https://www.sapporootani.ed.jp/" class="event-link">
+                        🌐 札幌大谷中 公式サイト
+                    </a>
+                </div>
+
+                <!-- 札幌光星中学校 入学試験プレテスト -->
+                <div class="event-card">
+                    <div class="category-tag test">模試・テスト</div>
+                    <h3 class="school-name">札幌光星中学校</h3>
+                    <h4 class="event-name">入学試験プレテスト</h4>
+                    <div class="event-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">📅</span>
+                            <span>11月2日（日）・3日（月祝）</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">⏰</span>
+                            <span>集合 8:20（受付 7:30～）</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">📚</span>
+                            <span>4教科型・LE型から選択</span>
+                        </div>
+                        <div class="price-info">💰 無料</div>
+                        <span class="target-grade">小学6年生対象</span>
+                    </div>
+                    <div class="apply-info">
+                        <div class="apply-title">申込方法</div>
+                        <div class="apply-period">7月1日（火）17:00～10月19日（日）23:59</div>
+                        <div class="apply-method">インターネット申込のみ</div>
+                    </div>
+                    <div class="special-note">
+                        💡 入試志願者の約8割が受験。成績資料は実施後約10日で返却
+                    </div>
+                    <a href="https://www.sapporokosei.ac.jp/" class="event-link">
+                        🌐 札幌光星中学校 公式サイト
+                    </a>
+                </div>
+
+                <!-- 札幌大谷中学校 Prodigy受験対策授業 -->
+                <div class="event-card">
+                    <div class="category-tag experience">体験授業</div>
+                    <h3 class="school-name">札幌大谷中学校</h3>
+                    <h4 class="event-name">Prodigy受験対策授業</h4>
+                    <div class="event-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">📅</span>
+                            <span>11月23日（日・祝）</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">⏰</span>
+                            <span>8:50-10:40</span>
+                        </div>
+                        <span class="target-grade">小学6年生対象</span>
+                    </div>
+                    <div class="apply-info">
+                        <div class="apply-title">申込方法</div>
+                        <div class="apply-method">準備中</div>
+                    </div>
+                    <a href="https://www.sapporootani.ed.jp/" class="event-link">
+                        🌐 札幌大谷中 公式サイト
+                    </a>
+                </div>
+
+                <!-- 札幌大谷中学校 新小6 医進・英数模試 -->
+                <div class="event-card">
+                    <div class="category-tag test">模試・テスト</div>
+                    <h3 class="school-name">札幌大谷中学校</h3>
+                    <h4 class="event-name">新小6 医進・英数模試</h4>
+                    <div class="event-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">📅</span>
+                            <span>2026年3月8日（日）</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">⏰</span>
+                            <span>8:30-11:10</span>
+                        </div>
+                        <span class="target-grade">新小学6年生対象（現小5）</span>
+                    </div>
+                    <div class="apply-info">
+                        <div class="apply-title">申込方法</div>
+                        <div class="apply-method">準備中</div>
+                    </div>
+                    <a href="https://www.sapporootani.ed.jp/" class="event-link">
+                        🌐 札幌大谷中 公式サイト
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- キッズクラブ -->
+        <section class="category-section">
+            <h2 class="category-title">キッズクラブ・継続プログラム</h2>
+            <div class="event-grid">
+                <!-- 北嶺中学校 ほくれいキッズクラブ -->
+                <div class="event-card">
+                    <div class="category-tag club">会員クラブ</div>
+                    <h3 class="school-name">北嶺中学校</h3>
+                    <h4 class="event-name">ほくれいキッズクラブ</h4>
+                    <div class="event-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">👦</span>
+                            <span>男子小学生対象</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">🎁</span>
+                            <span>会員証・会員バッジプレゼント</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">📧</span>
+                            <span>学校情報・行事案内を定期配信</span>
+                        </div>
+                        <div class="price-info">💰 完全無料（入会・年会費・郵送費）</div>
+                        <span class="target-grade">男子小学生対象</span>
+                    </div>
+                    <div class="apply-info">
+                        <div class="apply-title">特典</div>
+                        <div class="apply-method">説明会での体験授業優先予約・各種プレゼント</div>
+                    </div>
+                    <div class="special-note">
+                        💡 入会・年会費・郵送費すべて無料。「めざすなら高い嶺」
+                    </div>
+                    <a href="https://www.kibou.ac.jp/hokurei/nyuugaku/kidsclub/" class="event-link">
+                        📝 ほくれいキッズクラブ 申込
+                    </a>
+                </div>
+
+                <!-- 札幌日大中学校 NKIDS' CLUB -->
+                <div class="event-card">
+                    <div class="category-tag club">会員クラブ</div>
+                    <h3 class="school-name">札幌日大中学校</h3>
+                    <h4 class="event-name">NKIDS' CLUB</h4>
+                    <div class="event-details">
+                        <div class="detail-item">
+                            <span class="detail-icon">📅</span>
+                            <span>全5回講座（7/19、7/26、8/30、9/6、9/20）</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">⏰</span>
+                            <span>14:00-16:00頃</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon">🚁</span>
+                            <span>ドローン・ロケット・宇宙エレベーター等</span>
+                        </div>
+                        <span class="target-grade">小学6年生対象</span>
+                    </div>
+                    <div class="apply-info">
+                        <div class="apply-title">申込締切</div>
+                        <div class="apply-method">2025年7月14日（月）</div>
+                    </div>
+                    <div class="special-note">
+                        💡 GLOBAL CREATE コース体験講座。探究学習プログラム
+                    </div>
+                    <a href="https://www.sapporonichidai.ed.jp/junior/nkids-club/" class="event-link">
+                        📝 NKIDS' CLUB 詳細・申込
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // 星空生成
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 100;
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                
+                // ランダムな位置
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                
+                // ランダムなサイズ
+                const size = Math.random() * 3 + 1;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                
+                // ランダムなアニメーション遅延
+                star.style.animationDelay = Math.random() * 3 + 's';
+                
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // ページ読み込み時に星空生成
+        window.addEventListener('load', createStars);
+    </script>
+</body>
+</html>
